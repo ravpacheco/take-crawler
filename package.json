@@ -1,0 +1,28 @@
+{
+  "name": "take-crawler",
+  "version": "1.0.0",
+  "description": "Simple crawler to get some data from Take's website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ravpacheco/take-crawler.git"
+  },
+  "keywords": [
+    "crawler"
+  ],
+  "author": "ravpacheco@gmail.com",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ravpacheco/take-crawler/issues"
+  },
+  "homepage": "https://github.com/ravpacheco/take-crawler#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.3",
+    "request": "^2.85.0",
+    "request-promise": "^4.2.2"
+  }
+}
