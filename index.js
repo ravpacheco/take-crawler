@@ -1,6 +1,10 @@
 var express = require('express');
 var app = express();
 
+app.get('/', function (req, res) {
+    res.send('Hello World!');
+});
+
 app.get('/jobs', function (req, res) {
 
     var rp = require('request-promise');
@@ -47,10 +51,10 @@ app.get('/posts/:category*?', function (req, res) {
     var cheerio = require('cheerio'); // Basically jQuery for node.js
 
     let categoryFilter = '';
-    if(req.params.category){
+    if (req.params.category) {
         categoryFilter = `tag/${req.params.category}`
     }
-    
+
     let posts = [];
 
     var options = {
