@@ -92,6 +92,48 @@ app.get('/posts/:category*?', function (req, res) {
         });
 });
 
+app.get('/jobsCard', function (req, res) {
+
+    var jobs = [{ "name": "Analista Contábil Fiscal", "location": "Belo Horizonte / MG", "infoUrl": "http://www.take.net/trabalhe-na-take/contabil-fiscal/" }, { "name": "Customer Success", "location": "Belo Horizonte/MG", "infoUrl": "http://www.take.net/trabalhe-na-take/analista-de-negocios-senior-2/" }, { "name": "Gestor de Projetos (GP)/ Product Owner (PO)", "location": "São Paulo/SP", "infoUrl": "http://www.take.net/trabalhe-na-take/gp-po/" }, { "name": "Analista de Pré-Vendas (SDR)", "location": "Belo Horizonte/MG", "infoUrl": "http://www.take.net/trabalhe-na-take/analista-de-pre-vendas/" }, { "name": "Outbound Sales Representative", "location": "Belo Horizonte/MG", "infoUrl": "http://www.take.net/trabalhe-na-take/outbound-sales-representative/" }, { "name": "Engenheir@ de Dados", "location": "Belo Horizonte/MG", "infoUrl": "http://www.take.net/trabalhe-na-take/engenheiro-de-dados/" }, { "name": "Analista de BI", "location": "Belo Horizonte/MG", "infoUrl": "http://www.take.net/trabalhe-na-take/analista-bi/" }, { "name": "User Experience (UX) SP", "location": "São Paulo/SP", "infoUrl": "http://www.take.net/trabalhe-na-take/user-experience-sp/" }, { "name": "User Experience (UX)", "location": "Belo Horizonte/MG", "infoUrl": "http://www.take.net/trabalhe-na-take/user-experience/" }, { "name": "Gestor de Projetos (GP)", "location": "Belo Horizonte/MG", "infoUrl": "http://www.take.net/trabalhe-na-take/gestor-de-projetos-product-owner/" }, { "name": "Developer – SP", "location": "São Paulo - SP", "infoUrl": "http://www.take.net/trabalhe-na-take/developer-sp/" }, { "name": "Desenvolvedor", "location": "Belo Horizonte/MG", "infoUrl": "http://www.take.net/trabalhe-na-take/desenvolvedor/" }, { "name": "Developer", "location": "Belo Horizonte/MG", "infoUrl": "http://www.take.net/trabalhe-na-take/developer/" }, { "name": "Estagiário de Desenvolvimento", "location": "São Paulo/SP", "infoUrl": "http://www.take.net/trabalhe-na-take/estagiario-de-desenvolvimento-2/" }, { "name": "Estagiário de Service Desk", "location": "Belo Horizonte/MG", "infoUrl": "http://www.take.net/trabalhe-na-take/estagiario-de-servicedesk/" }, { "name": "Product Owner (PO)", "location": "Belo Horizonte/MG", "infoUrl": "http://www.take.net/trabalhe-na-take/product-owner-po-2/" }];
+
+    var carousel = {
+        "itemType": "application/vnd.lime.document-select+json",
+        "items": []
+    };
+
+    var total = jobs.length >= 7 ? 7 : jobs.length;
+
+    for (var i = 0; i < total; i++) {
+        carousel.items.push(
+            {
+                "header": {
+                    "type": "application/vnd.lime.media-link+json",
+                    "value": {
+                        "title": jobs[i].name,
+                        "text": jobs[i].location,
+                        "type": "image/jpeg",
+                    }
+                },
+                "options": [
+                    {
+                        "label": {
+                            "type": "application/vnd.lime.web-link+json",
+                            "value": {
+                                "title": "Maiores informações",
+                                "text": "Maiores informações",
+                                "uri": jobs[i].infoUrl
+                            }
+                        }
+                    }
+                ]
+            }
+        )
+    }
+
+    res.json(carousel);
+    //"application/vnd.lime.collection+json"
+});
+
 app.listen(process.env.PORT || 3000, function () {
     console.log('Example app listening on port 3000!');
 });
