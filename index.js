@@ -153,7 +153,8 @@ app.get('/carouselPosts/:category*?', function (req, res) {
                                 "type": "application/vnd.lime.web-link+json",
                                 "value": {
                                     "title": "Ler conteúdo",
-                                    "uri": url
+                                    "uri": url,
+                                    "target": "blank"
                                 }
                             }
                         },
