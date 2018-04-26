@@ -218,6 +218,14 @@ app.get('/jobsCard', function (req, res) {
                                 "uri": jobs[i].infoUrl
                             }
                         }
+                    },
+                    {
+                        "label": {
+                            "type": "application/json",
+                            "value": {
+                                "type": "element_share"
+                            }
+                        }
                     }
                 ]
             }
