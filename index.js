@@ -92,7 +92,7 @@ app.get('/posts/:category*?', function (req, res) {
         });
 });
 
-app.get('/carouselPosts/:category*?', function (req, res) {
+app.get('/carouselPosts2/:category*?', function (req, res) {
 
     var rp = require('request-promise');
     var cheerio = require('cheerio'); // Basically jQuery for node.js
@@ -173,6 +173,88 @@ app.get('/carouselPosts/:category*?', function (req, res) {
 
             function handle(element, index, array) {
                 postsCarousel.items.push(
+                    getCard(element.title, element.publishedDate, element.imageUrl, element.url)
+                );
+            }
+
+            posts.forEach(handle);
+
+            res.json(postsCarousel);
+        })
+        .catch(function (err) {
+            res.send(err);
+        });
+});
+
+app.get('/carouselPosts/:category*?', function (req, res) {
+
+    var rp = require('request-promise');
+    var cheerio = require('cheerio'); // Basically jQuery for node.js
+
+    let categoryFilter = '';
+    if (req.params.category) {
+        categoryFilter = `tag/${req.params.category}`
+    }
+
+    let posts = [];
+
+    var options = {
+        uri: `https://chatbotsbrasil.take.net/${categoryFilter}`,
+        transform: function (body) {
+            return cheerio.load(body);
+        }
+    };
+
+    const postsClassesPattern = ".blog-item-wrap";
+
+    rp(options)
+        .then(function ($) {
+            // Process html like you would with jQuery...
+            $(postsClassesPattern).each(function (i, elem) {
+                let metaData = $(this).find('a');
+                let postUrl = $(this).find('a').attr('href');
+                let postTitle = $(this).find('a').attr('title');
+                let postImageUrl = $($(this).find('a img')[0]).attr('src');
+                let postPublishedDate = $(this).find('.entry-date.published').text();
+
+                posts.push({
+                    url: postUrl,
+                    title: postTitle,
+                    imageUrl: postImageUrl,
+                    publishedDate: postPublishedDate
+                });
+            });
+
+            var postsCarousel = {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "generic",
+                        "elements": []
+                    }
+                }
+            };
+
+            function getCard(title, text, imageUrl, url) {
+                return {
+                    "title": title,
+                    "subtitle": text,
+                    "image_url": imageUrl,
+                    "buttons": [
+                        {
+                            "type":"web_url",
+                            "url":url,
+                            "title":"Ler conteúdo"
+                          },
+                        {
+                        "type": "element_share"
+                    }
+                    ]
+                };
+            }
+
+            function handle(element, index, array) {
+                postsCarousel.attachment.payload.elements.push(
                     getCard(element.title, element.publishedDate, element.imageUrl, element.url)
                 );
             }
