@@ -268,7 +268,7 @@ app.get('/carouselPosts/:category*?', function (req, res) {
         });
 });
 
-app.get('/jobsCard', function (req, res) {
+app.get('/jobsCard2', function (req, res) {
 
     var jobs = [{ "name": "Analista Contábil Fiscal", "location": "Belo Horizonte / MG", "infoUrl": "http://www.take.net/trabalhe-na-take/contabil-fiscal/" }, { "name": "Customer Success", "location": "Belo Horizonte/MG", "infoUrl": "http://www.take.net/trabalhe-na-take/analista-de-negocios-senior-2/" }, { "name": "Gestor de Projetos (GP)/ Product Owner (PO)", "location": "São Paulo/SP", "infoUrl": "http://www.take.net/trabalhe-na-take/gp-po/" }, { "name": "Analista de Pré-Vendas (SDR)", "location": "Belo Horizonte/MG", "infoUrl": "http://www.take.net/trabalhe-na-take/analista-de-pre-vendas/" }, { "name": "Outbound Sales Representative", "location": "Belo Horizonte/MG", "infoUrl": "http://www.take.net/trabalhe-na-take/outbound-sales-representative/" }, { "name": "Engenheir@ de Dados", "location": "Belo Horizonte/MG", "infoUrl": "http://www.take.net/trabalhe-na-take/engenheiro-de-dados/" }, { "name": "Analista de BI", "location": "Belo Horizonte/MG", "infoUrl": "http://www.take.net/trabalhe-na-take/analista-bi/" }, { "name": "User Experience (UX) SP", "location": "São Paulo/SP", "infoUrl": "http://www.take.net/trabalhe-na-take/user-experience-sp/" }, { "name": "User Experience (UX)", "location": "Belo Horizonte/MG", "infoUrl": "http://www.take.net/trabalhe-na-take/user-experience/" }, { "name": "Gestor de Projetos (GP)", "location": "Belo Horizonte/MG", "infoUrl": "http://www.take.net/trabalhe-na-take/gestor-de-projetos-product-owner/" }, { "name": "Developer – SP", "location": "São Paulo - SP", "infoUrl": "http://www.take.net/trabalhe-na-take/developer-sp/" }, { "name": "Desenvolvedor", "location": "Belo Horizonte/MG", "infoUrl": "http://www.take.net/trabalhe-na-take/desenvolvedor/" }, { "name": "Developer", "location": "Belo Horizonte/MG", "infoUrl": "http://www.take.net/trabalhe-na-take/developer/" }, { "name": "Estagiário de Desenvolvimento", "location": "São Paulo/SP", "infoUrl": "http://www.take.net/trabalhe-na-take/estagiario-de-desenvolvimento-2/" }, { "name": "Estagiário de Service Desk", "location": "Belo Horizonte/MG", "infoUrl": "http://www.take.net/trabalhe-na-take/estagiario-de-servicedesk/" }, { "name": "Product Owner (PO)", "location": "Belo Horizonte/MG", "infoUrl": "http://www.take.net/trabalhe-na-take/product-owner-po-2/" }];
 
@@ -307,6 +307,79 @@ app.get('/jobsCard', function (req, res) {
     }
 
     res.json(carousel);
+    //"application/vnd.lime.collection+json"
+});
+
+app.get('/jobsCard', function (req, res) {
+
+    var rp = require('request-promise');
+    var cheerio = require('cheerio'); // Basically jQuery for node.js
+
+    let jobs = [];
+
+    var options = {
+        uri: 'http://www.take.net/trabalhe-na-take/',
+        transform: function (body) {
+            return cheerio.load(body);
+        }
+    };
+
+    const jobDivsClassesPattern = ".col-xs-offset-1.col-xs-10.col-sm-offset-0.col-sm-6.vcenter";
+
+    rp(options)
+        .then(function ($) {
+            // Process html like you would with jQuery...
+            $(jobDivsClassesPattern).each(function (i, elem) {
+                let data = $(this).find('p');
+                let jobName = $(data[0]).text();
+                let jobLocation = $(data[1]).text();
+                let jobInfoUrl = $(this).find('a').attr('href');
+                //console.log(`${i}> ${jobName}, ${jobLocation}, ${jobInfoUrl}`);
+
+                jobs.push({
+                    name: jobName,
+                    location: jobLocation,
+                    infoUrl: jobInfoUrl
+                });
+            });
+
+            var carousel = {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "generic",
+                        "elements": []
+                    }
+                }
+            };
+        
+            var total = jobs.length >= 7 ? 7 : jobs.length;
+        
+            for (var i = 0; i < total; i++) {
+                carousel.attachment.payload.elements.push(
+                    {
+                        "title": jobs[i].name,
+                        "subtitle": jobs[i].location,
+                        "buttons": [
+                            {
+                                "type":"web_url",
+                                "url":jobs[i].infoUrl,
+                                "title":"Maiores informações"
+                              },
+                            {
+                            "type": "element_share"
+                        }
+                        ]
+                    }
+                )
+            }
+        
+            res.json(carousel);
+        })
+        .catch(function (err) {
+            res.send(err);
+        });
+    
     //"application/vnd.lime.collection+json"
 });
 
