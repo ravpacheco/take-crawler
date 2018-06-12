@@ -1,3 +1,80 @@
+// // Receive the variables as parameters
+// function run() {
+//     return {
+//         "attachment": {
+//             "type": "template",
+//             "payload": {
+//                 "image_aspect_ratio": "square",
+//                 "template_type": "generic",
+//                 "elements": [
+//                     {
+//                         "title": "Google I/O e F8",
+//                         "subtitle": "O que aprendemos nos eventos do Google e Facebook.",
+//                         "image_url": "https://s3.amazonaws.com/elasticbeanstalk-us-east-1-405747350567/take/30784381_174265369960372_1241804639_n.png",
+//                         "buttons": [
+//                             {
+//                                 "type": "web_url",
+//                                 "url": "https://conversa.take.net/agradecimento-webinar-aprendizados-googleio-f8",
+//                                 "title": "Assistir Webinar"
+//                             },
+//                             {
+//                                 "type": "element_share"
+//                             }
+//                         ]
+//                     },
+//                     {
+//                         "title": "Gestão de TI e Chatbots",
+//                         "subtitle": "Quais os desafios e como superá-los.",
+//                         "image_url": "https://s3.amazonaws.com/elasticbeanstalk-us-east-1-405747350567/take/30784381_174265369960372_1241804639_n.png",
+//                         "buttons": [
+//                             {
+//                                 "type": "web_url",
+//                                 "url": "https://conversa.take.net/agradecimento-webinar-desafios-gestao-ti",
+//                                 "title": "Assistir Webinar"
+//                             },
+//                             {
+//                                 "type": "element_share"
+//                             }
+//                         ]
+//                     },
+//                     {
+//                         "title": "Chatbots — Transformação Digital",
+//                         "subtitle": "Tudo que você precisa saber sobre chatbots e transformação digital.",
+//                         "image_url": "https://imgur.com/xdeJxez.png",
+//                         "buttons": [
+//                             {
+//                                 "type": "web_url",
+//                                 "url": "https://conversa.take.net/agradecimento-webinar-digitalizacao-comunicacao",
+//                                 "title": "Assistir Webinar"
+//                             },
+//                             {
+//                                 "type": "element_share"
+//                             }
+//                         ]
+//                     },
+//                     {
+//                         "title": "Chatbots — one step beyond",
+//                         "subtitle": "Tudo que você precisa saber sobre chatbots para 2018.",
+//                         "image_url": "https://imgur.com/Tb9Wmv1.png",
+//                         "buttons": [
+//                             {
+//                                 "type": "web_url",
+//                                 "url": "https://www.youtube.com/watch?v=KEKlapMjsrw",
+//                                 "title": "Assistir Webinar"
+//                             },
+//                             {
+//                                 "type": "element_share"
+//                             }
+//                         ]
+//                     }
+//                 ]
+//             }
+//         }
+//     };
+// }
+
+
+
 
 // {
 //     "itemType": "application/vnd.lime.document-select+json",

@@ -295,8 +295,8 @@ app.get('/jobsCard2', function (req, res) {
                         "label": {
                             "type": "application/vnd.lime.web-link+json",
                             "value": {
-                                "title": "Maiores informações",
-                                "text": "Maiores informações",
+                                "title": "Mais informações",
+                                "text": "Mais informações",
                                 "uri": jobs[i].infoUrl
                             }
                         }
@@ -364,7 +364,7 @@ app.get('/jobsCard', function (req, res) {
                             {
                                 "type":"web_url",
                                 "url":jobs[i].infoUrl,
-                                "title":"Maiores informações"
+                                "title":"Mais informações"
                               },
                             {
                             "type": "element_share"
