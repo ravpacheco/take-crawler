@@ -324,15 +324,15 @@ app.get('/jobsCard', function (req, res) {
         }
     };
 
-    const jobDivsClassesPattern = ".col-xs-offset-1.col-xs-10.col-sm-offset-0.col-sm-6.vcenter";
+    const jobDivsClassesPattern = ".vaga";
 
     rp(options)
         .then(function ($) {
             // Process html like you would with jQuery...
             $(jobDivsClassesPattern).each(function (i, elem) {
                 let data = $(this).find('p');
-                let jobName = $(data[0]).text();
-                let jobLocation = $(data[1]).text();
+                let jobName = $(this).find('h3').text();
+                let jobLocation = $(this).find('.t-vaga').text();
                 let jobInfoUrl = $(this).find('a').attr('href');
                 //console.log(`${i}> ${jobName}, ${jobLocation}, ${jobInfoUrl}`);
 
