@@ -52,19 +52,19 @@ app.get('/posts/:category*?', function (req, res) {
 
     let categoryFilter = '';
     if (req.params.category) {
-        categoryFilter = `tag/${req.params.category}`
+        categoryFilter = `${req.params.category}`
     }
 
     let posts = [];
 
     var options = {
-        uri: `https://chatbotsbrasil.take.net/${categoryFilter}`,
+        uri: `https://take.net/blog/${categoryFilter}`,
         transform: function (body) {
             return cheerio.load(body);
         }
     };
 
-    const postsClassesPattern = ".blog-item-wrap";
+    const postsClassesPattern = ".home-item";
 
     rp(options)
         .then(function ($) {
@@ -72,9 +72,9 @@ app.get('/posts/:category*?', function (req, res) {
             $(postsClassesPattern).each(function (i, elem) {
                 let metaData = $(this).find('a');
                 let postUrl = $(this).find('a').attr('href');
-                let postTitle = $(this).find('a').attr('title');
+                let postTitle = $(this).find('h3').text();
                 let postImageUrl = $($(this).find('a img')[0]).attr('src');
-                let postPublishedDate = $(this).find('.entry-date.published').text();
+                let postPublishedDate = $(this).find('.item-meta-date').text().trim();
                 console.log(`${i}> ${postUrl}, ${postTitle}, ${postImageUrl}, ${postPublishedDate}`);
 
                 posts.push({
@@ -99,19 +99,19 @@ app.get('/carouselPosts2/:category*?', function (req, res) {
 
     let categoryFilter = '';
     if (req.params.category) {
-        categoryFilter = `tag/${req.params.category}`
+        categoryFilter = `${req.params.category}`
     }
 
     let posts = [];
 
     var options = {
-        uri: `https://chatbotsbrasil.take.net/${categoryFilter}`,
+        uri: `https://take.net/blog/${categoryFilter}`,
         transform: function (body) {
             return cheerio.load(body);
         }
     };
 
-    const postsClassesPattern = ".blog-item-wrap";
+    const postsClassesPattern = ".home-item";
 
     rp(options)
         .then(function ($) {
@@ -119,9 +119,9 @@ app.get('/carouselPosts2/:category*?', function (req, res) {
             $(postsClassesPattern).each(function (i, elem) {
                 let metaData = $(this).find('a');
                 let postUrl = $(this).find('a').attr('href');
-                let postTitle = $(this).find('a').attr('title');
+                let postTitle = $(this).find('h3').text();
                 let postImageUrl = $($(this).find('a img')[0]).attr('src');
-                let postPublishedDate = $(this).find('.entry-date.published').text();
+                let postPublishedDate = $(this).find('.item-meta-date').text().trim();
 
                 posts.push({
                     url: postUrl,
@@ -193,19 +193,19 @@ app.get('/carouselPosts/:category*?', function (req, res) {
 
     let categoryFilter = '';
     if (req.params.category) {
-        categoryFilter = `tag/${req.params.category}`
+        categoryFilter = `${req.params.category}`
     }
 
     let posts = [];
 
     var options = {
-        uri: `https://chatbotsbrasil.take.net/${categoryFilter}`,
+        uri: `https://take.net/blog/${categoryFilter}`,
         transform: function (body) {
             return cheerio.load(body);
         }
     };
 
-    const postsClassesPattern = ".blog-item-wrap";
+    const postsClassesPattern = ".home-item";
 
     rp(options)
         .then(function ($) {
@@ -213,9 +213,9 @@ app.get('/carouselPosts/:category*?', function (req, res) {
             $(postsClassesPattern).each(function (i, elem) {
                 let metaData = $(this).find('a');
                 let postUrl = $(this).find('a').attr('href');
-                let postTitle = $(this).find('a').attr('title');
+                let postTitle = $(this).find('h3').text();
                 let postImageUrl = $($(this).find('a img')[0]).attr('src');
-                let postPublishedDate = $(this).find('.entry-date.published').text();
+                let postPublishedDate = $(this).find('.item-meta-date').text().trim();
 
                 posts.push({
                     url: postUrl,
